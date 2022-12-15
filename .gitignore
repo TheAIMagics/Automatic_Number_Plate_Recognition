@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+notebooks/images
+notebooks/object detection
+notebooks/Test
+notebooks/labels.csv
+notebooks/anpr_model.h5
