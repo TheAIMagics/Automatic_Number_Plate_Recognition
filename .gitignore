@@ -133,3 +133,4 @@ notebooks/object detection
 notebooks/Test
 notebooks/labels.csv
 notebooks/anpr_model.h5
+artifacts

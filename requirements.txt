@@ -5,4 +5,6 @@ scikit-learn
 opencv-python==4.5.5.64
 boto3==1.26.3
 mypy-boto3-s3==1.24.76
+from_root==1.0.2
+python-dotenv
 -e .
