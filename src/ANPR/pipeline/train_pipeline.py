@@ -1,15 +1,18 @@
 import os,sys
 from src.ANPR.config.s3_operations import S3Operation
-from src.ANPR.entity.config_entity import DataIngestionConfig
-from src.ANPR.entity.artifacts_entity import DataIngestionArtifacts
+from src.ANPR.entity.config_entity import *
+from src.ANPR.entity.artifacts_entity import *
 from src.ANPR.logger import logging
 from src.ANPR.exception import CustomException
 from src.ANPR.constants import *
 from src.ANPR.components.data_ingestion import DataIngestion
+from src.ANPR.components.data_transformation import DataTransformation
+
 
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
+        self.data_transformation_config = DataTransformationConfig()
         self.s3_operations = S3Operation()
 
     def start_data_ingestion(self)->DataIngestionArtifacts:
@@ -23,10 +26,25 @@ class TrainPipeline:
             return data_ingestion_artifact
         except Exception as e:
             raise CustomException(e, sys)
+
+    def start_data_transformation(self,data_ingestion_artifact : DataIngestionArtifacts):
+        try:
+            logging.info("Entered the start_data_transformation method of TrainPipeline class")
+            data_transformation_obj = DataTransformation(data_transformation_config=self.data_transformation_config,
+            data_ingestion_artifact=data_ingestion_artifact)
+
+            data_transformation_artifact = data_transformation_obj.initiate_data_transformation()
+            logging.info("Exited the start_data_transformation method of TrainPipeline class")
+            return data_transformation_artifact
+            
+        except Exception as e:
+            raise CustomException(e, sys)
+        
     
     def run_pipeline(self)->None:
         try:
             data_ingestion_artifact = self.start_data_ingestion()
+            data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact)
         except Exception as e:
             raise CustomException(e, sys)
         
