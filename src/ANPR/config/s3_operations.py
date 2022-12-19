@@ -103,3 +103,14 @@ class S3Operation:
 
         except Exception as e:
             raise CustomException(e, sys) from e
+
+    def load_h5_model(self,bucket_name,object_file_name,local_file_name):
+        try:
+            self.download_file(bucket_name,local_file_name,object_file_name)
+
+            model = load_model(local_file_name)
+
+            return model
+            
+        except Exception as e:
+            raise e 
