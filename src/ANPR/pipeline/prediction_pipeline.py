@@ -48,7 +48,7 @@ def object_detection(path, filename,model):
 
 def Optical_character_recognition(path, filename):
     model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model')
-    #shutil.rmtree(model_path)
+    shutil.rmtree(model_path)
     os.makedirs(model_path, exist_ok=True)
     model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model', 'model.h5')
     s3_operation = S3Operation()
