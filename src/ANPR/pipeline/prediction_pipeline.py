@@ -47,15 +47,18 @@ def object_detection(path, filename,model):
     return coords
 
 def Optical_character_recognition(path, filename):
+    model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model')
+    shutil.rmtree(model_path)
+    os.makedirs(model_path, exist_ok=True)
     model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model', 'model.h5')
-    #s3_operation = S3Operation()
-    #fetch_model = s3_operation.load_h5_model(bucket_name=BUCKET_NAME,object_file_name=TRAINED_MODEL,local_file_name=model_path)
+    s3_operation = S3Operation()
+    fetch_model = s3_operation.load_h5_model(bucket_name=BUCKET_NAME,object_file_name=TRAINED_MODEL,local_file_name=model_path)
     #fetch_model = tf.keras.models.load_model(fetch_model)
-    #logging.info(f"Loaded {fetch_model} model from S3 bucket.")
-    model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model', 'model.h5')
-    fetch_model = tf.keras.models.load_model(model_path)
+    logging.info(f"Loaded {fetch_model} model from S3 bucket.")
+    #model_path = os.path.join(os.getcwd(), STATIC_DIR, 'model', 'model.h5')
+    
     cods = object_detection(path=path, filename=filename, model=fetch_model)
-
+    print(cods)
     
     img = np.array(load_img(path))
     xmin, xmax, ymin, ymax = cods[0]

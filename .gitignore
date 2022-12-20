@@ -135,3 +135,4 @@ notebooks/labels.csv
 notebooks/anpr_model.h5
 artifacts
 static/model/model.h5
+logs

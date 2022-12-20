@@ -97,7 +97,7 @@ class TrainPipeline:
                 data_transformation_artifact = data_transformation_artifact,
                 prepare_base_model_artifact=prepare_base_model_artifact)
             
-            self.start_model_pusher(model_trainer_artifacts = model_trainer_artifact,s3_operations=self.s3_operations)
+            #self.start_model_pusher(model_trainer_artifacts = model_trainer_artifact,s3_operations=self.s3_operations)
             
         except Exception as e:
             raise CustomException(e, sys)
